@@ -14,7 +14,11 @@ mid-sentence writes one line to a text file: the error message an AI agent shows
 python3 main.py
 ```
 
-It writes the line to `/output/entry.txt` (or `$MAKEFUN_OUTPUT_DIR/entry.txt`). No network access needed; the same text, byte for byte, on every run — verified by running it twice and comparing the outputs. The line is 68 characters on a single line. The program holds the line as one constant and checks it against the entry gate (length, single line, no leading or trailing space) before writing it, then reads the file back to confirm the bytes match.
+It writes the line to `/output/entry.txt` (or `$MAKEFUN_OUTPUT_DIR/entry.txt`). No network access is needed, and every run writes the same text, byte for byte — verified by running it twice and comparing the outputs. The line is 68 characters on a single line. The program holds the line as one constant and checks it against the entry gate (length, single line, no leading or trailing space) before writing it, then reads the file back to confirm the bytes match.
+
+## How it works
+
+`main.py` is split into small steps: `check_line` refuses anything that is not exactly the judged line, `entry_bytes` encodes it, and `write_entry` writes the file and reads it back to confirm the bytes. Nothing is read from the network or from outside the program, so the output can only ever be the one line above. The gate also enforces the entry limits: a single line of 1–140 characters.
 
 ---
 
